@@ -584,9 +584,9 @@ public :
    
    bool writeHistos();
    
-   void calc_MM_variables(TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons, vector<FourMom> m_jets_skimmed);
-   void calc_EE_variables(TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons, vector<FourMom> m_jets_skimmed);
-   void calc_EM_variables(TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons, vector<FourMom> m_jets_skimmed);
+   void calc_MM_variables(TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons);
+   void calc_EE_variables(TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons);
+   void calc_EM_variables(TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons);
    
    float calcHT(TLorentzVector l1, TLorentzVector l2, TLorentzVector met, vector<FourMom> signalJets);
    float recalcMetRel(TLorentzVector metLV, TLorentzVector l1, TLorentzVector l2, vector<FourMom> signalJets);

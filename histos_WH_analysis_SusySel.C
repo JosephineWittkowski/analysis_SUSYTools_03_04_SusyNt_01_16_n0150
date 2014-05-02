@@ -434,10 +434,10 @@ bool SusySel::defineHistos(){
 
 }
 
-void SusySel::calc_MM_variables(TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons, vector<FourMom> m_jets_skimmed){
+void SusySel::calc_MM_variables(TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons){
   pTl0_MM = (mu0_TLV.Pt() > mu1_TLV.Pt()) ? mu0_TLV.Pt() : mu1_TLV.Pt();
   pTl1_MM = (mu0_TLV.Pt() > mu1_TLV.Pt()) ? mu1_TLV.Pt() : mu0_TLV.Pt();
-  HT_MM = calcHT(mu0_TLV, mu1_TLV, met_TLV, m_jets_skimmed);
+  HT_MM = calcHT(mu0_TLV, mu1_TLV, met_TLV, signalJets);
   Mll_MM = (mu0_TLV + mu1_TLV).M();
   METrel_MM = recalcMetRel(met_TLV, mu0_TLV, mu1_TLV, signalJets);
   mTWW_MM = calcMt((mu0_TLV + mu1_TLV), met_TLV);
@@ -482,10 +482,10 @@ void SusySel::calc_MM_variables(TLorentzVector mu0_TLV, TLorentzVector mu1_TLV, 
   
 }  
 
-void SusySel::calc_EE_variables(TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons, vector<FourMom> m_jets_skimmed){
+void SusySel::calc_EE_variables(TLorentzVector el0_TLV, TLorentzVector el1_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons){
   pTl0_EE = (el0_TLV.Pt() > el1_TLV.Pt()) ? el0_TLV.Pt() : el1_TLV.Pt();
   pTl1_EE = (el0_TLV.Pt() > el1_TLV.Pt()) ? el1_TLV.Pt() : el0_TLV.Pt();
-  HT_EE = calcHT(el0_TLV, el1_TLV, met_TLV, m_jets_skimmed);
+  HT_EE = calcHT(el0_TLV, el1_TLV, met_TLV, signalJets);
   Mll_EE = (el0_TLV + el1_TLV).M();
   METrel_EE = recalcMetRel(met_TLV, el0_TLV, el1_TLV, signalJets);
   mTWW_EE = calcMt((el0_TLV + el1_TLV), met_TLV);
@@ -528,10 +528,10 @@ void SusySel::calc_EE_variables(TLorentzVector el0_TLV, TLorentzVector el1_TLV, 
 
 } 
 
-void SusySel::calc_EM_variables(TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons, vector<FourMom> m_jets_skimmed){
+void SusySel::calc_EM_variables(TLorentzVector mu_TLV, TLorentzVector el_TLV, TLorentzVector met_TLV, vector<FourMom> signalJets, vector<FourMom> m_leptons){
   pTl0_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? el_TLV.Pt() : mu_TLV.Pt();
   pTl1_EM = (el_TLV.Pt() > mu_TLV.Pt()) ? mu_TLV.Pt() : el_TLV.Pt();
-  HT_EM = calcHT(el_TLV, mu_TLV, met_TLV, m_jets_skimmed);
+  HT_EM = calcHT(el_TLV, mu_TLV, met_TLV, signalJets);
   Mll_EM = (el_TLV + mu_TLV).M();
   METrel_EM = recalcMetRel(met_TLV, el_TLV, mu_TLV, signalJets);
   mTWW_EM = calcMt((el_TLV + mu_TLV), met_TLV);

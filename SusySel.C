@@ -14,10 +14,7 @@ void SusySel::Init(TTree *tree)
    // Set branch addresses and branch pointers
   if (!tree) return;
   fChain = tree;
-// fChain->SetMakeClass(1);
-// m_eventParameters = 0;
-// fChain->SetBranchStatus("*",1); //all branches inactivated
-// fChain->SetBranchStatus("weight",1);
+
   m_jets_b = 0;
   fChain->SetBranchAddress("pars", &m_eventParameters, &m_eventParameters_b);
   fChain->SetBranchAddress("l0", &m_l0, &m_l0_b);
@@ -31,9 +28,9 @@ void SusySel::Init(TTree *tree)
 void SusySel::Begin(TTree * /*tree*/)
 {
 
-//   gROOT->ProcessLine("#include <vector>");
+
    TString option = GetOption();
-// m_eventParameters = new EventParameters();
+
 }
 
 void SusySel::SlaveBegin(TTree * /*tree*/)
@@ -41,7 +38,6 @@ void SusySel::SlaveBegin(TTree * /*tree*/)
    TString option = GetOption();
    defineHistos();
 
-//    m_chargeFlip.initialize("/data/etp3/jwittkow/analysis_SUSYTools_03_04_SusyNt_01_16/ChargeFlip/data/d0_chargeflip_map.root");
 }
 
 Bool_t SusySel::Process(Long64_t entry)
@@ -54,12 +50,7 @@ Bool_t SusySel::Process(Long64_t entry)
     m_met_b->GetEntry(entry);
     m_jets_b->GetEntry(entry);
     m_lepts_b->GetEntry(entry);
-// cout << "m_eventParameters.weight= " << m_eventParameters->weight << endl;
-// cout << "m_eventParameters.eventNumber= " << m_eventParameters->eventNumber << endl;
-//
-// cout<<"l0 : "<<fourMom2str(m_l0 )<<endl;
-// cout<<"l1 : "<<fourMom2str(m_l1 )<<endl;
-// cout<<"met : "<<fourMom2str(m_met )<<endl;
+
     
     
     TLorentzVector met_TLV;
@@ -67,16 +58,18 @@ Bool_t SusySel::Process(Long64_t entry)
     if(entry== 0 || entry==1){
       cout << "event= " << m_eventParameters->eventNumber << endl;
       
-      
+    if(entry== 0  && m_eventParameters->eventNumber == 5) sample_identifier = 116600; //ZZ
+    if(entry== 0  && m_eventParameters->eventNumber == 10017) sample_identifier = 160155; //Higgs
+    if(entry== 0  && m_eventParameters->eventNumber == 10381348) sample_identifier = 108346; //ttbar    
+    if(entry== 0  && m_eventParameters->eventNumber == 583910) sample_identifier = 169471; //WW
+    if(entry== 0  && m_eventParameters->eventNumber == 2506) sample_identifier = 126988;//WWPlusJets 
+    if(entry== 0  && m_eventParameters->eventNumber == 10016) sample_identifier = 110805; //ZPlusJets    
+
     if(entry== 0  && m_eventParameters->eventNumber == 83) sample_identifier = 126893; //cutflow comparison  
     if(entry== 0  && (m_eventParameters->eventNumber == 1149513 || m_eventParameters->eventNumber == 3276687)) sample_identifier = 30000; //fake  
-    if(entry== 0  && m_eventParameters->eventNumber == 25009) sample_identifier = 169471; //WW
-    if(entry== 0  && m_eventParameters->eventNumber == 111) sample_identifier = 126988;//WWPlusJets
+
     if(entry== 0  && m_eventParameters->eventNumber == 15004) sample_identifier = 157814; //WZ    
-    if(entry== 0  && m_eventParameters->eventNumber == 5) sample_identifier = 116600; //ZZ
-    if(entry== 0  && m_eventParameters->eventNumber == 5012) sample_identifier = 108346; //ttbar    
-    if(entry== 0  && m_eventParameters->eventNumber == 35015) sample_identifier = 110805; //ZPlusJets    
-    if(entry== 0  && m_eventParameters->eventNumber == 10017) sample_identifier = 160155; //Higgs
+
 
     if(entry== 0  && m_eventParameters->eventNumber == 10006) sample_identifier = 177501; 
     if(entry== 0  && m_eventParameters->eventNumber == 5007) sample_identifier = 177502; 
@@ -113,11 +106,9 @@ Bool_t SusySel::Process(Long64_t entry)
 //===========================================================================================
 
       
-    cout << "event= " << m_eventParameters->eventNumber << endl;
+//     cout << "event= " << m_eventParameters->eventNumber << endl;
     TLorentzVector jet_TLV_test;
-//     if(m_jets_skimmed.size()>0) jet_TLV_test.SetPxPyPzE(m_jets->at(0).px, m_jets->at(0).py, m_jets->at(0).pz, m_jets->at(0).E); cout << "jet 0 " << jet_TLV_test.Pt() << endl;
-//     if(m_jets_skimmed.size()>1) jet_TLV_test.SetPxPyPzE(m_jets->at(1).px, m_jets->at(1).py, m_jets->at(1).pz, m_jets->at(1).E); cout << "jet 1 " << jet_TLV_test.Pt() << endl;
-//     if(m_jets_skimmed.size()>2) jet_TLV_test.SetPxPyPzE(m_jets->at(2).px, m_jets->at(2).py, m_jets->at(2).pz, m_jets->at(2).E); cout << "jet 2 " << jet_TLV_test.Pt() << endl;
+
     
     vector<FourMom> m_jets_skimmed;
     for(int i = 0; i < m_jets->size(); i++){
@@ -130,13 +121,7 @@ Bool_t SusySel::Process(Long64_t entry)
       m_lepts_skimmed.push_back(m_lepts->at(i));
       i++;
     }
-//     cout << "m_jets->size()= " << m_jets->size() << " m_jets_skimmed.size()= " << m_jets_skimmed.size() << " m_lepts_skimmed->size()= " <<  m_lepts_skimmed->size() << endl;
-//     
-//     if(m_jets_skimmed.size()>0) cout << "jet 0 " << m_jets_skimmed.at(0).px << endl;
-//     if(m_jets_skimmed.size()>1) cout << "jet 1 " << m_jets_skimmed.at(1).px << endl;
-//     if(m_jets_skimmed.size()>2) cout << "jet 2 " << m_jets_skimmed.at(2).px << endl;
 
-    
       
     l0IsMu = m_l0->isMu; //muon
     l1IsMu = m_l1->isMu; //electron
@@ -146,20 +131,8 @@ Bool_t SusySel::Process(Long64_t entry)
       el0_SS_TLV.SetPxPyPzE(m_l0->px, m_l0->py, m_l0->pz, m_l0->E);
       el1_SS_TLV.SetPxPyPzE(m_l1->px, m_l1->py, m_l1->pz, m_l1->E);
       TLorentzVector met_SS_TLV = met_TLV;
-//       if((m_l0->q * m_l1->q)<0 && m_eventParameters->ismc){
-// 	//weight already included but electron pT and MET not smeared
-// 	m_chargeFlip.setSeed(m_eventParameters->eventNumber);
-// 	TVector2 met_SS_TVector2;
-// 	met_SS_TVector2.Set(met_TLV.Px(), met_TLV.Py());
-// // 	if(m_eventParameters->eventNumber == 2150756)cout << el0_SS_TLV.Pt() << " " << el1_SS_TLV.Pt() << " EE " << m_eventParameters->eventNumber << endl;
-// 	m_chargeFlip.OS2SS(11* (-1) * m_l0->q, &el0_SS_TLV, 11* (-1) * m_l1->q, &el1_SS_TLV, &met_SS_TVector2, 0);
-// 	
-// 	met_SS_TLV.SetPx(met_SS_TVector2.Px());
-// 	met_SS_TLV.SetPy(met_SS_TVector2.Py());	
-// 	met_SS_TLV.SetE(sqrt(pow(met_SS_TVector2.Px(),2) + pow(met_SS_TVector2.Py(),2)));
-//       }
       
-      calc_EE_variables(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_jets_skimmed, m_lepts_skimmed, m_jets_skimmed);
+      calc_EE_variables(el0_SS_TLV, el1_SS_TLV, met_SS_TLV, m_jets_skimmed, m_lepts_skimmed);
 	  
       float cutnumber_EE;
 
@@ -233,6 +206,7 @@ if(m_l0->isMu && m_l1->isMu){
     TLorentzVector mu0_TLV, mu1_TLV;
     mu0_TLV.SetPxPyPzE(m_l0->px, m_l0->py, m_l0->pz, m_l0->E);
     mu1_TLV.SetPxPyPzE(m_l1->px, m_l1->py, m_l1->pz, m_l1->E);
+    calc_MM_variables(mu0_TLV, mu1_TLV, met_TLV, m_jets_skimmed, m_lepts_skimmed);
 
       //===============================================================================================================================		  
       if(m_jets_skimmed.size() ==1){
@@ -241,7 +215,6 @@ if(m_l0->isMu && m_l1->isMu){
 	if(mu0_TLV.Pt()>=20. && mu1_TLV.Pt()>=20. && ((mu0_TLV.Pt()>mu1_TLV.Pt() && mu0_TLV.Pt() >= 30.) || (mu0_TLV.Pt()<mu1_TLV.Pt() && mu1_TLV.Pt() >= 30.))){
 	  cutnumber_MM = 26.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
 	  cutnumber_MM = 27.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight); //ZVeto
-  
 	  if(DeltaEtall_MM < 1.5){
 	    cutnumber_MM = 28.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
 	      
@@ -285,87 +258,68 @@ if(m_l0->isMu && m_l1->isMu){
 
 //===========================================================================================
 //===========================================================================================
-//     if((m_l0->isEl && m_l1->isMu) || (m_l0->isMu && m_l1->isEl)){
-//       
-//       TLorentzVector el_TLV, mu_TLV;
-//       if(m_l0->isEl){
-// 	el_TLV.SetPxPyPzE(m_l0->px, m_l0->py, m_l0->pz, m_l0->E);
-// 	mu_TLV.SetPxPyPzE(m_l1->px, m_l1->py, m_l1->pz, m_l1->E);
-// 	l0IsMu = m_l1->isMu; // will indicate a muon
-// 	l1IsMu = m_l0->isMu; // will indicate an electron
-//       }
-//       else{
-// 	mu_TLV.SetPxPyPzE(m_l0->px, m_l0->py, m_l0->pz, m_l0->E);
-// 	el_TLV.SetPxPyPzE(m_l1->px, m_l1->py, m_l1->pz, m_l1->E);
-// 	l0IsMu = m_l0->isMu; // will indicate a muon
-// 	l1IsMu = m_l1->isMu; // will indicate an electron
-//       }
-//       TLorentzVector met_SS_TLV = met_TLV;
-// //       if((m_l0->q * m_l1->q)<0 && m_eventParameters->ismc){
-// // 	//weight already included but electron pT and MET not smeared
-// // 	m_chargeFlip.setSeed(m_eventParameters->eventNumber);
-// // 	TVector2 met_SS_TVector2;
-// // 	met_SS_TVector2.Set(met_TLV.Px(), met_TLV.Py());
-// // 	TLorentzVector empty_TLV;
-// // 	m_chargeFlip.OS2SS(11* (-1) * m_l0->q, &el_TLV, 13, &empty_TLV, &met_SS_TVector2, 0);
-// // 	met_SS_TLV.SetPx(met_SS_TVector2.Px());
-// // 	met_SS_TLV.SetPy(met_SS_TVector2.Py());	
-// // 	met_SS_TLV.SetE(sqrt(pow(met_SS_TVector2.Px(),2) + pow(met_SS_TVector2.Py(),2)));
-// //       }
-//       
-//       calc_EM_variables(mu_TLV, el_TLV, met_SS_TLV, m_jets_skimmed, m_lepts_skimmed, m_jets_skimmed);
-//       float cutnumber_EM;
-//       cutnumber_EM = 1.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
-//       //------------------------------------------------------------------------------------
-//       if(m_jets_skimmed.size() ==1){
-// 	cutnumber_EM = 2.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
-// 	if(el_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_TLV.Pt()>mu_TLV.Pt() && el_TLV.Pt() >= 30.) || (el_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
-// 	  cutnumber_EM = 3.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
-// 	  cutnumber_EM = 4.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight); //ZVeto
-// 	  //SRSS1
-// 	  if(mTWW_EM >= 140.){
-// 	    cutnumber_EM = 5.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);				
-// 	    if(HT_EM >= 200.){
-// 	      cutnumber_EM = 6.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
-// 	      if(METrel_EM>=50.){
-// 		cutnumber_EM = 7.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
-// 		if(mass_3rdlepZ_EM > MZ+20. || mass_3rdlepZ_EM < MZ-20.){
-// 		  
-// 		  cutnumber_EM = 8.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
-// 		}				 
-// 	      }
-// 	    }
-// 	  }
-// 	}
-//       }
-// //------------------------------------------------------------------------------------
-//       if(m_jets_skimmed.size() >=2){
-// 	cutnumber_EM = 22.; fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);
-// 	if(el_TLV.Pt()>=20. && mu_TLV.Pt()>=20. && ((el_TLV.Pt()>mu_TLV.Pt() && el_TLV.Pt() >= 30.) || (el_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
-// 	  cutnumber_EM = 23.; fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);
-// 	  cutnumber_EM = 24.; fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight); //ZVeto
-// 	  //SRSS1
-// 	  if(mTWW_EM >= 140.){
-// 	    cutnumber_EM = 25.; fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);				
-// 	    if(HT_EM >= 200.){
-// 	      cutnumber_EM = 26.; fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);
-// 	      if(METrel_EM>=50.){
-// 		cutnumber_EM = 27.; fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);
-// 		if(mass_3rdlepZ_EM > MZ+20. || mass_3rdlepZ_EM < MZ-20.){
-// 		  cutnumber_EM = 28.; fillHistos_2j_EM(cutnumber_EM, m_eventParameters->weight);
-// 		}
-// 	      }
-// 	    }
-// 	  }
-// 	}
-//       }
-//       
-//       
-//       
-//       // ########################################### REOPTIMIZATION ###########################################
-// 
-//       
-// }
+if((m_l0->isEl && m_l1->isMu) || (m_l0->isMu && m_l1->isEl)){
+  TLorentzVector el_SS_TLV, mu_TLV;
+  if(m_l0->isEl){
+    el_SS_TLV.SetPxPyPzE(m_l0->px, m_l0->py, m_l0->pz, m_l0->E);
+    mu_TLV.SetPxPyPzE(m_l1->px, m_l1->py, m_l1->pz, m_l1->E);
+    l0IsMu = m_l1->isMu; // will indicate a muon
+    l1IsMu = m_l0->isMu; // will indicate an electron
+  }
+  else{
+    mu_TLV.SetPxPyPzE(m_l0->px, m_l0->py, m_l0->pz, m_l0->E);
+    el_SS_TLV.SetPxPyPzE(m_l1->px, m_l1->py, m_l1->pz, m_l1->E);
+    l0IsMu = m_l0->isMu; // will indicate a muon
+    l1IsMu = m_l1->isMu; // will indicate an electron
+  }
+  TLorentzVector met_SS_TLV = met_TLV;
+  
+  calc_EM_variables(mu_TLV, el_SS_TLV, met_SS_TLV, m_jets_skimmed, m_lepts_skimmed);
+  float cutnumber_EM;
+  //------------------------------------------------------------------------------------
+  if(m_jets_skimmed.size() ==1){
+    cutnumber_EM = 25.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+    if(el_SS_TLV.Pt()>=30. && mu_TLV.Pt()>=30. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
+      cutnumber_EM = 26.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+      cutnumber_EM = 27.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight); //ZVeto
+      
+      if(DeltaEtall_EM < 1.5){
+	cutnumber_EM = 28.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);				
+	if(mTmax_EM > 110){
+	  cutnumber_EM = 29.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+	  if(Mlj_EM < 90.){
+	    cutnumber_EM = 30.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+	    if(HT_EM > 200.){
+	      cutnumber_EM = 31.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+	    }				 
+	  }
+	}
+      }
+    }
+  }//end ==1jet
+//------------------------------------------------------------------------------------
+  if(m_jets_skimmed.size() >=2 && m_jets_skimmed.size() <=3){
+    cutnumber_EM = 34.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+    if(el_SS_TLV.Pt()>=30. && mu_TLV.Pt()>=30. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
+      cutnumber_EM = 35.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+      cutnumber_EM = 36.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight); //ZVeto
+      if(DeltaEtall_EM < 1.5){
+	cutnumber_EM = 37.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+	cutnumber_EM = 38.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);				
+	
+	if(mTmax_EM >= 110.){
+	  cutnumber_EM = 39.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+	  if(Mljj_EM < 120.){
+	    cutnumber_EM = 40.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+	    if(HT_EM > 200.){	
+	    cutnumber_EM = 41.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+	    }
+	  }
+	}
+      }
+    }
+  }//end >=2 jets
+}
       
 //===========================================================================================
 //===========================================================================================
@@ -392,8 +346,7 @@ float SusySel::calcHT(TLorentzVector l1, TLorentzVector l2, TLorentzVector met, 
   HT += l1.Pt();
   HT += l2.Pt();
   
-//   FourMom jet0 =     m_jets_skimmed->at(0);
-//       cout << "jet0->px= " << jet0.px << endl;
+
       
   for(uint i=0; i<(signalJets).size(); i++){
     FourMom signalJet =     (signalJets).at(i);
