@@ -1,6 +1,6 @@
 {
    
-  TFile hn("/data/etp3/jwittkow/analysis_SUSYTools_03_04_SusyNt_01_16/output_WH_177501_SusySel_test.root");
+  TFile hn("/data/etp3/jwittkow/analysis_SUSYTools_03_04_SusyNt_01_16_n0150/output_WH_177501_SusySel_try.root");
   hn.Print();
 TH1F *alpha_raw = (TH1F*)hn.Get("cutflow_EE");
 TH1F *beta_raw = (TH1F*)hn.Get("cutflow_EM");
@@ -38,9 +38,9 @@ cout << "valid pT           :" << alpha_raw->GetBinContent(19) << "     " << gam
 cout << "Trigger            :" << alpha_raw->GetBinContent(20) << "     " << gamma_raw->GetBinContent(20) << "     " << beta_raw->GetBinContent(20)  << endl; 
 cout << "RealLeptonsCheck   :" << alpha_raw->GetBinContent(21) << "     " << gamma_raw->GetBinContent(21) << "     " << beta_raw->GetBinContent(21)  << endl; 
 cout << "SameSign           :" << alpha_raw->GetBinContent(22) << "     " << gamma_raw->GetBinContent(22) << "     " << beta_raw->GetBinContent(22)  << endl; 
-cout << "3rd lep veto       :" << alpha_raw->GetBinContent(23) << "     " << gamma_raw->GetBinContent(23) << "     " << beta_raw->GetBinContent(23)  << endl; 
-cout << "FVeto              :" << alpha_raw->GetBinContent(24) << "     " << gamma_raw->GetBinContent(24) << "     " << beta_raw->GetBinContent(24)  << endl; 
-cout << "bVeto              :" << alpha_raw->GetBinContent(25) << "     " << gamma_raw->GetBinContent(25) << "     " << beta_raw->GetBinContent(25)  << endl; 
+cout << "FVeto              :" << alpha_raw->GetBinContent(23) << "     " << gamma_raw->GetBinContent(23) << "     " << beta_raw->GetBinContent(23)  << endl; 
+cout << "bVeto              :" << alpha_raw->GetBinContent(24) << "     " << gamma_raw->GetBinContent(24) << "     " << beta_raw->GetBinContent(24)  << endl; 
+cout << "3rd lepton Veto    :" << alpha_raw->GetBinContent(25) << "     " << gamma_raw->GetBinContent(25) << "     " << beta_raw->GetBinContent(25)  << endl; 
 cout << "======================================================" << endl;
 cout << "==1jet             :" << alpha_raw->GetBinContent(26) << "     " << gamma_raw->GetBinContent(26) << "     " << beta_raw->GetBinContent(26)  << endl; 
 cout << "lep pt             :" << alpha_raw->GetBinContent(27) << "     " << gamma_raw->GetBinContent(27) << "     " << beta_raw->GetBinContent(27)  << endl; 
@@ -109,9 +109,9 @@ cout << "valid pT           :" << alpha_mcEventWeight->GetBinContent(19) << "   
 cout << "Trigger            :" << alpha_mcEventWeight->GetBinContent(20) << "     " << gamma_mcEventWeight->GetBinContent(20) << "     " << beta_mcEventWeight->GetBinContent(20)  << endl; 
 cout << "RealLeptonsCheck   :" << alpha_mcEventWeight->GetBinContent(21) << "     " << gamma_mcEventWeight->GetBinContent(21) << "     " << beta_mcEventWeight->GetBinContent(21)  << endl; 
 cout << "SameSign           :" << alpha_mcEventWeight->GetBinContent(22) << "     " << gamma_mcEventWeight->GetBinContent(22) << "     " << beta_mcEventWeight->GetBinContent(22)  << endl; 
-cout << "3rd lep veto       :" << alpha_mcEventWeight->GetBinContent(23) << "     " << gamma_mcEventWeight->GetBinContent(23) << "     " << beta_mcEventWeight->GetBinContent(23)  << endl; 
-cout << "FVeto              :" << alpha_mcEventWeight->GetBinContent(24) << "     " << gamma_mcEventWeight->GetBinContent(24) << "     " << beta_mcEventWeight->GetBinContent(24)  << endl; 
-cout << "bVeto              :" << alpha_mcEventWeight->GetBinContent(25) << "     " << gamma_mcEventWeight->GetBinContent(25) << "     " << beta_mcEventWeight->GetBinContent(25)  << endl; 
+cout << "Fveto              :" << alpha_mcEventWeight->GetBinContent(23) << "     " << gamma_mcEventWeight->GetBinContent(23) << "     " << beta_mcEventWeight->GetBinContent(23)  << endl; 
+cout << "bVeto              :" << alpha_mcEventWeight->GetBinContent(24) << "     " << gamma_mcEventWeight->GetBinContent(24) << "     " << beta_mcEventWeight->GetBinContent(24)  << endl; 
+cout << "3rd lepton Veto    :" << alpha_mcEventWeight->GetBinContent(25) << "     " << gamma_mcEventWeight->GetBinContent(25) << "     " << beta_mcEventWeight->GetBinContent(25)  << endl; 
 cout << "======================================================" << endl;
 cout << "==1jet             :" << alpha_mcEventWeight->GetBinContent(26) << "     " << gamma_mcEventWeight->GetBinContent(26) << "     " << beta_mcEventWeight->GetBinContent(26)  << endl; 
 cout << "lep pt             :" << alpha_mcEventWeight->GetBinContent(27) << "     " << gamma_mcEventWeight->GetBinContent(27) << "     " << beta_mcEventWeight->GetBinContent(27)  << endl; 

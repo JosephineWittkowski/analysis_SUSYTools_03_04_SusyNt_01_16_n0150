@@ -76,13 +76,17 @@ struct EventParameters {
     unsigned int runNumber;
     bool ismc;
     float metrel;
-    EventParameters() : weight(0), eventNumber(0), runNumber(0), ismc(0), metrel(0) {}
+    float mllZcandidate_mu;
+    float mllZcandidate_el;
+    EventParameters() : weight(0), eventNumber(0), runNumber(0), ismc(0), metrel(0), mllZcandidate_mu(0), mllZcandidate_el(0) {}
 #ifndef __CINT__
     EventParameters& setWeight(const double &w) { weight=w; return *this; }
     EventParameters& setEvent(const unsigned int &e) { eventNumber=e; return *this; }
     EventParameters& setRun(const unsigned int &r) { runNumber=r; return *this; }
     EventParameters& setIsmc(const bool &im) { ismc=im; return *this; }
     EventParameters& setMetrel(const float &metr) { metrel=metr; return *this; }
+    EventParameters& setMllZcand_mu(const float &mllZcand_mu) {mllZcandidate_mu = mllZcand_mu; return *this;}
+    EventParameters& setMllZcand_el(const float &mllZcand_el) {mllZcandidate_el = mllZcand_el; return *this;}
 #endif
 };
 

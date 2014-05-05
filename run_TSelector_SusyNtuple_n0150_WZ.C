@@ -91,35 +91,32 @@ void run_TSelector_SusyNtuple_n0150_WZ() {
       gROOT->ProcessLine(processLine); // need to add this, or PoD at LRZ will not be able to load the .so
       gROOT->ProcessLine(".x $ROOTCOREDIR/scripts/load_packages.C+");
 //       ch->Add(InputPath);
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129477.PowhegPythia8_WZ_Wm11Z11_mll0p250d0_2L5.SusyNt.e1300_s1469_s1470_r3542_r3549_p1512_n0150.131227021043/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129478.PowhegPythia8_WZ_Wm11Z13_mll0p4614d0_2L5.SusyNt.e1300_s1469_s1470_r3542_r3549_p1512_n0150.131227021123/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129479.PowhegPythia8_WZ_Wm11Z15_mll3p804d0_2L5.SusyNt.e2372_s1469_s1470_r3542_r3549_p1512_n0150.131227021259/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129480.PowhegPythia8_WZ_Wm13Z11_mll0p250d0_2L5.SusyNt.e1300_s1469_s1470_r3542_r3549_p1512_n0150.131227021431/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129481.PowhegPythia8_WZ_Wm13Z13_mll0p4614d0_2L5.SusyNt.e1300_s1469_s1470_r3542_r3549_p1512_n0150.131227021513/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129482.PowhegPythia8_WZ_Wm13Z15_mll3p804d0_2L5.SusyNt.e2372_s1469_s1470_r3542_r3549_p1512_n0150.131227021639/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129483.PowhegPythia8_WZ_Wm15Z11_mll0p250d0_2L5.SusyNt.e2372_s1469_s1470_r3542_r3549_p1512_n0150.131227021854/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129484.PowhegPythia8_WZ_Wm15Z13_mll0p4614d0_2L5.SusyNt.e2372_s1469_s1470_r3542_r3549_p1512_n0150.131227022109/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129485.PowhegPythia8_WZ_Wm15Z15_mll3p804d0_2L5.SusyNt.e2372_s1469_s1470_r3542_r3549_p1512_n0150.131227022321/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129486.PowhegPythia8_WZ_W11Z11_mll0p250d0_2L5.SusyNt.e1300_s1469_s1470_r3542_r3549_p1512_n0150.140108191016/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129487.PowhegPythia8_WZ_W11Z13_mll0p4614d0_2L5.SusyNt.e1300_s1469_s1470_r3542_r3549_p1512_n0150.140108191133/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129488.PowhegPythia8_WZ_W11Z15_mll3p804d0_2L5.SusyNt.e2372_s1469_s1470_r3542_r3549_p1512_n0150.131227022657/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129489.PowhegPythia8_WZ_W13Z11_mll0p250d0_2L5.SusyNt.e1300_s1469_s1470_r3542_r3549_p1512_n0150.131227022831/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129490.PowhegPythia8_WZ_W13Z13_mll0p4614d0_2L5.SusyNt.e1300_s1469_s1470_r3542_r3549_p1512_n0150.131227022915/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129491.PowhegPythia8_WZ_W13Z15_mll3p804d0_2L5.SusyNt.e2372_s1469_s1470_r3542_r3549_p1512_n0150.131227023042/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129492.PowhegPythia8_WZ_W15Z11_mll0p250d0_2L5.SusyNt.e2372_s1469_s1470_r3542_r3549_p1512_n0150.140109025018/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129493.PowhegPythia8_WZ_W15Z13_mll0p4614d0_2L5.SusyNt.e2372_s1469_s1470_r3542_r3549_p1512_n0150.131227023518/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.129494.PowhegPythia8_WZ_W15Z15_mll3p804d0_2L5.SusyNt.e2372_s1469_s1470_r3542_r3549_p1512_n0150.131227023736/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.167007.MadGraphPythia_AUET2BCTEQ6L1_ZWWStar_lllnulnu.SusyNt.e1466_s1499_s1504_r3658_r3549_p1512_n0150.131227064602/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.167008.MadGraphPythia_AUET2BCTEQ6L1_ZZZStar_nunullll.SusyNt.e1466_s1499_s1504_r3658_r3549_p1512_n0150.131227064651/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183585.Sherpa_CT10_ZWtoeeqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023333/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183586.Sherpa_CT10_ZZtoeeqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023409/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183587.Sherpa_CT10_ZWtomumuqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023447/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183588.Sherpa_CT10_ZZtomumuqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023522/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183589.Sherpa_CT10_ZWtotautauqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023557/*");
-ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183590.Sherpa_CT10_ZZtotautauqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023630/*");
+
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.179974.Sherpa_CT10_lllnu_WZ_MassiveCB.SusyNt.e2203_s1581_s1586_r4485_r4540_p1512_n0150.140208030336/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.179974.Sherpa_CT10_lllnu_WZ_MassiveCB.SusyNt.e2203_s1581_s1586_r4485_r4540_p1512_n0150.140210094749/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.179975.Sherpa_CT10_lnununu_WZ_MassiveCB.SusyNt.e2203_s1581_s1586_r4485_r4540_p1512_n0150.140209021518/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183585.Sherpa_CT10_ZWtoeeqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023333/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183587.Sherpa_CT10_ZWtomumuqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023447/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183589.Sherpa_CT10_ZWtotautauqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023557/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183591.Sherpa_CT10_ZWtonunuqq_MassiveCB.SusyNt.e2463_s1581_s1586_r4485_r4540_p1512_n0150.140208030751/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183735.Sherpa_CT10_WZtoenuqq_MassiveCB.SusyNt.e2347_s1581_s1586_r4485_r4540_p1512_n0150.140209021820/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183737.Sherpa_CT10_WZtomunuqq_MassiveCB.SusyNt.e2347_s1581_s1586_r4485_r4540_p1512_n0150.140209021919/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183739.Sherpa_CT10_WZtotaunuqq_MassiveCB.SusyNt.e2347_s1581_s1586_r4485_r4540_p1512_n0150.140208031157/*");      
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.167007.MadGraphPythia_AUET2BCTEQ6L1_ZWWStar_lllnulnu.SusyNt.e1466_s1499_s1504_r3658_r3549_p1512_n0150.131227064602/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.177999.Sherpa_CT10_llnunu_ZZ_MassiveCB.SusyNt.e2136_s1581_s1586_r4485_r4540_p1512_n0150.140209021344/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183586.Sherpa_CT10_ZZtoeeqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023409/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183588.Sherpa_CT10_ZZtomumuqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023522/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.183590.Sherpa_CT10_ZZtotautauqq_MassiveCB.SusyNt.e2370_s1581_s1586_r4485_r4540_p1512_n0150.140129023630/*");
+ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.126894.Sherpa_CT10_llll_ZZ.SusyNt.e1434_s1499_s1504_r3658_r3549_p1512_n0150.131227013232/*");
+ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.126894.Sherpa_CT10_llll_ZZ.SusyNt.e1434_s1499_s1504_r3658_r3549_p1512_n0150.140102061614/*");
+ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.126894.Sherpa_CT10_llll_ZZ.SusyNt.e2399_s1581_s1586_r4485_r4540_p1512_n0150.140130221248/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.167008.MadGraphPythia_AUET2BCTEQ6L1_ZZZStar_nunullll.SusyNt.e1466_s1499_s1504_r3658_r3549_p1512_n0150.131227064651/*");
+// ch->Add("/nobackup/etp2/Josephine.Wittkowski/SusyNtuples_n0150/WZ/user.gerbaudo.mc12_8TeV.179396.gg2ZZJimmy_AUET2CT10_ZZ4lep_2lepFilt.SusyNt.e2279_s1499_s1504_r3658_r3549_p1512_n0150.131227073603/*");
 
 
-      
+
+
+
       
 
 	    
