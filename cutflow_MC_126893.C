@@ -1,6 +1,6 @@
 {
    
-  TFile hn("/data/etp3/jwittkow/analysis_SUSYTools_03_04_SusyNt_01_16_n0150/histos_ZN_177501_n0150_MZ20GeV0.root");
+  TFile hn("/data/etp3/jwittkow/analysis_SUSYTools_03_04_SusyNt_01_16_n0150/histos_ZN_177503_n0150_02_06_14.root");
   hn.Print();
 TH1F *alpha_raw = (TH1F*)hn.Get("cutflow_EE");
 TH1F *beta_raw = (TH1F*)hn.Get("cutflow_EM");
@@ -119,9 +119,9 @@ cout << "ZVeto              :" << alpha_mcEventWeight->GetBinContent(28) << "   
 cout << "DeltaEtal0l1       :" << alpha_mcEventWeight->GetBinContent(29) << "     " << gamma_mcEventWeight->GetBinContent(29) << "     " << beta_mcEventWeight->GetBinContent(29)  << endl; 
 cout << "max(mT)            :" << alpha_mcEventWeight->GetBinContent(30) << "     " << gamma_mcEventWeight->GetBinContent(30) << "     " << beta_mcEventWeight->GetBinContent(30)  << endl; 
 cout << "mlj                :" << alpha_mcEventWeight->GetBinContent(31) << "     " << gamma_mcEventWeight->GetBinContent(31) << "     " << beta_mcEventWeight->GetBinContent(31)  << endl; 
-cout << "HT                 :" << alpha_mcEventWeight->GetBinContent(32) << "     " << gamma_mcEventWeight->GetBinContent(32) << "     " << beta_mcEventWeight->GetBinContent(32)<< "     " << beta_mcEventWeight->GetBinError(32)  << endl; 
-cout << "METrel             :" << alpha_mcEventWeight->GetBinContent(33) << "     " << gamma_mcEventWeight->GetBinContent(33) << "     " << beta_mcEventWeight->GetBinContent(33)  << endl; 
-cout << "mT(WW)             :" << alpha_mcEventWeight->GetBinContent(34) << "     " << gamma_mcEventWeight->GetBinContent(34) << "     " << beta_mcEventWeight->GetBinContent(34)  << endl; 
+cout << "HT                 :" << alpha_mcEventWeight->GetBinContent(32) << "     " << gamma_mcEventWeight->GetBinContent(32)<< " +/- " << gamma_mcEventWeight->GetBinError(32) << "     " << beta_mcEventWeight->GetBinContent(32)<< " +/- " << beta_mcEventWeight->GetBinError(32)  << endl; 
+cout << "METrel             :" << alpha_mcEventWeight->GetBinContent(33)<< " +/- " << alpha_mcEventWeight->GetBinError(33) << "     " << gamma_mcEventWeight->GetBinContent(33) << "     " << beta_mcEventWeight->GetBinContent(33)  << endl; 
+
 cout << "======================================================" << endl;
 cout << ">=2jets            :" << alpha_mcEventWeight->GetBinContent(35) << "     " << gamma_mcEventWeight->GetBinContent(35) << "     " << beta_mcEventWeight->GetBinContent(35)  << endl; 
 cout << "lep pt             :" << alpha_mcEventWeight->GetBinContent(36) << "     " << gamma_mcEventWeight->GetBinContent(36) << "     " << beta_mcEventWeight->GetBinContent(36)  << endl; 
@@ -129,6 +129,6 @@ cout << "mll                :" << alpha_mcEventWeight->GetBinContent(37) << "   
 cout << "DeltaEtal0l1       :" << alpha_mcEventWeight->GetBinContent(38) << "     " << gamma_mcEventWeight->GetBinContent(38) << "     " << beta_mcEventWeight->GetBinContent(38)  << endl; 
 cout << "max(mT)            :" << alpha_mcEventWeight->GetBinContent(39) << "     " << gamma_mcEventWeight->GetBinContent(39) << "     " << beta_mcEventWeight->GetBinContent(39)  << endl; 
 cout << "mljj               :" << alpha_mcEventWeight->GetBinContent(40) << "     " << gamma_mcEventWeight->GetBinContent(40) << "     " << beta_mcEventWeight->GetBinContent(40)  << endl; 
-cout << "HT                 :" << alpha_mcEventWeight->GetBinContent(41) << "     " << gamma_mcEventWeight->GetBinContent(41) << "     " << beta_mcEventWeight->GetBinContent(41)  << endl; 
-cout << "METrel             :" << alpha_mcEventWeight->GetBinContent(42) << "     " << gamma_mcEventWeight->GetBinContent(42) << "     " << beta_mcEventWeight->GetBinContent(42) << "     " << beta_mcEventWeight->GetBinError(42)  << endl; 
+cout << "HT                 :" << alpha_mcEventWeight->GetBinContent(41) << "     " << gamma_mcEventWeight->GetBinContent(41)<< " +/- " << gamma_mcEventWeight->GetBinError(41) << "     " << beta_mcEventWeight->GetBinContent(41)  << endl; 
+cout << "METrel             :" << alpha_mcEventWeight->GetBinContent(42)<< " +/- " << alpha_mcEventWeight->GetBinError(42) << "     " << gamma_mcEventWeight->GetBinContent(42) << "     " << beta_mcEventWeight->GetBinContent(42) << "     " << beta_mcEventWeight->GetBinError(42)  << endl; 
 }

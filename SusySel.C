@@ -58,16 +58,14 @@ Bool_t SusySel::Process(Long64_t entry)
     if(entry== 0 || entry==1){
       cout << "event= " << m_eventParameters->eventNumber << endl;
       
-    if(entry== 0  && m_eventParameters->eventNumber == 5) sample_identifier = 116600; //ZZ
-    if(entry== 0  && m_eventParameters->eventNumber == 10013) sample_identifier = 160155; //Higgs
-    if(entry== 0  && m_eventParameters->eventNumber == 10381348) sample_identifier = 108346; //ttbar    
-    if(entry== 0  && m_eventParameters->eventNumber == 583910) sample_identifier = 169471; //WW
-    if(entry== 0  && m_eventParameters->eventNumber == 2506) sample_identifier = 126988;//WWPlusJets 
-    if(entry== 0  && m_eventParameters->eventNumber == 10016) sample_identifier = 110805; //ZPlusJets    
-    if(entry== 0  && m_eventParameters->eventNumber == 16038) sample_identifier = 157814; //WZ   //2503014 
+    if(entry== 0  && m_eventParameters->eventNumber == 10017) sample_identifier = 160155; //Higgs
+    if(entry== 0  && m_eventParameters->eventNumber == 5012) sample_identifier = 108346; //ttbar    5012
+    if(entry== 0  && m_eventParameters->eventNumber == 111) sample_identifier = 169471; //WW
+    if(entry== 0  && m_eventParameters->eventNumber == 35015) sample_identifier = 110805; //ZPlusJets    
+    if(entry== 0  && m_eventParameters->eventNumber == 2503014) sample_identifier = 157814; //WZ   //2503014 
 
     if(entry== 0  && m_eventParameters->eventNumber == 83) sample_identifier = 126893; //cutflow comparison  
-    if(entry== 0  && (m_eventParameters->eventNumber == 1643456 || m_eventParameters->eventNumber == 3276687)) sample_identifier = 30000; //fake  
+    if(entry== 0  && (m_eventParameters->eventNumber == 1557906 || m_eventParameters->eventNumber == 3276687)) sample_identifier = 30000; //fake  
 
 
     if(entry== 0  && m_eventParameters->eventNumber == 10006) sample_identifier = 177501; 
@@ -81,7 +79,7 @@ Bool_t SusySel::Process(Long64_t entry)
     if(entry== 0  && m_eventParameters->eventNumber == 5005) sample_identifier = 177509; 
     if(entry== 0  && m_eventParameters->eventNumber == 15015) sample_identifier = 177510; 
     if(entry== 0  && m_eventParameters->eventNumber == 10001) sample_identifier = 177511; 
-    if(entry== 0  && m_eventParameters->eventNumber == 25004) sample_identifier = 177512; 
+//     if(entry== 0  && m_eventParameters->eventNumber == 25004) sample_identifier = 177512; 
     if(entry== 1  && m_eventParameters->eventNumber == 10) sample_identifier = 177513; 
     if(entry== 0  && m_eventParameters->eventNumber == 20001) sample_identifier = 177514; 
     if(entry== 0  && m_eventParameters->eventNumber == 45017) sample_identifier = 177515; 
@@ -112,24 +110,14 @@ Bool_t SusySel::Process(Long64_t entry)
     vector<FourMom> m_jets_skimmed;
     for(int i = 0; i < m_jets->size(); i++){
       m_jets_skimmed.push_back(m_jets->at(i));
-//       i++;
     }
-    
-//         for(int i = 0; i < m_jets->size(); i++){
-//       cout << "m_jets->at(i)->py= " << m_jets->at(i).py  << endl;
-//     }
-//     cout << "m_jets->size()= " << m_jets->size() << " m_jets_skimmed.size()= " << m_jets_skimmed.size() << endl;
+
     vector<FourMom> m_lepts_skimmed;
     for(int i = 0; i < m_lepts->size(); i++){
       m_lepts_skimmed.push_back(m_lepts->at(i));
-//       i++;
     }
     
-//     for(int i = 0; i < m_lepts->size(); i++){
-//       cout << "m_lepts->at(i)->py= " << m_lepts->at(i).py  << endl;
-//     }
-    
-//     cout << "m_lepts->size()= " << m_lepts->size() << " m_lepts_skimmed.size()= " << m_lepts_skimmed.size() << endl;
+    float ZMassWindow_check = 20.;
 
       
     l0IsMu = m_l0->isMu; //muon
@@ -145,10 +133,8 @@ Bool_t SusySel::Process(Long64_t entry)
 	  
       float cutnumber_EE;
 
-//       cout << "m_eventParameters->mllZcandidate= " << m_eventParameters->mllZcandidate << endl;
       if(m_eventParameters->mllZcandidate_el > MZ+20. || m_eventParameters->mllZcandidate_el < MZ-20){
 	cutnumber_EE = 24.;  fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
-// 	if(m_jets_skimmed.size() >=1){
 
 			      
 
@@ -202,8 +188,49 @@ Bool_t SusySel::Process(Long64_t entry)
 	  }
 	}
       }//end >=2 jets
-//     } //end >=1 jets
+    //============================================
   }
+  
+  //check 3rd lepton veto significance:
+  
+  //============================================
+  if(m_jets_skimmed.size() ==1){
+    if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
+      if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
+	if(Mlj_EE < 90.){
+	  if(HT_EE > 200.){			    
+	    if(m_eventParameters->metrel > 55.){
+	      cutnumber_EE = 50.;  fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      if(m_eventParameters->mllZcandidate_el > MZ+ZMassWindow_check || m_eventParameters->mllZcandidate_el < MZ-ZMassWindow_check){
+		cutnumber_EE = 51.;  fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	      }
+	    }
+	  }
+	}
+      }
+    }
+  }//end ==1 jets
+//==================
+if(m_jets_skimmed.size() >=2 && m_jets_skimmed.size() <=3){
+
+  if(el0_SS_TLV.Pt()>=20. && el1_SS_TLV.Pt()>=20. && ((el0_SS_TLV.Pt()>el1_SS_TLV.Pt() && el0_SS_TLV.Pt() >= 30.) || (el0_SS_TLV.Pt()<el1_SS_TLV.Pt() && el1_SS_TLV.Pt() >= 30.))){
+
+    if((el0_SS_TLV + el1_SS_TLV).M() > MZ+10. || (el0_SS_TLV + el1_SS_TLV).M() < MZ-10.){
+      
+      if(mTmax_EE > 100.){
+	if(Mljj_EE < 120.){
+	  if(m_eventParameters->metrel>=30.){			    
+	    cutnumber_EE = 60.;  fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	    if(m_eventParameters->mllZcandidate_el > MZ+ZMassWindow_check || m_eventParameters->mllZcandidate_el < MZ-ZMassWindow_check){
+	      cutnumber_EE = 61.;  fillHistos_1j_EE(cutnumber_EE, m_eventParameters->weight);
+	    }	    
+	  }
+	}
+      }
+    }
+  }
+}//end >=2 jets
+//============================================
 
 }
 
@@ -212,61 +239,113 @@ Bool_t SusySel::Process(Long64_t entry)
 // ########################################### CUTFLOW COMPARISON ###########################################
 if(m_l0->isMu && m_l1->isMu){
   float cutnumber_MM;
-//   if(m_jets_skimmed.size() >=1){
 
-    TLorentzVector mu0_TLV, mu1_TLV;
-    mu0_TLV.SetPxPyPzE(m_l0->px, m_l0->py, m_l0->pz, m_l0->E);
-    mu1_TLV.SetPxPyPzE(m_l1->px, m_l1->py, m_l1->pz, m_l1->E);
-    calc_MM_variables(mu0_TLV, mu1_TLV, met_TLV, m_jets_skimmed, m_lepts_skimmed);
-    if(m_eventParameters->mllZcandidate_mu > MZ+20. || m_eventParameters->mllZcandidate_mu < MZ-20){
-      cutnumber_MM = 24.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-      //===============================================================================================================================		  
-      if(m_jets_skimmed.size() ==1){
-	cutnumber_MM = 25.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-	
-	if(mu0_TLV.Pt()>=20. && mu1_TLV.Pt()>=20. && ((mu0_TLV.Pt()>mu1_TLV.Pt() && mu0_TLV.Pt() >= 30.) || (mu0_TLV.Pt()<mu1_TLV.Pt() && mu1_TLV.Pt() >= 30.))){
-	  cutnumber_MM = 26.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-	  cutnumber_MM = 27.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight); //ZVeto
-	  if(DeltaEtall_MM < 1.5){
-	    cutnumber_MM = 28.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-	      
-	    if(mTmax_MM > 100.){
-	      cutnumber_MM = 29.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-	      if(Mlj_MM < 90.){
-		cutnumber_MM = 30.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+  TLorentzVector mu0_TLV, mu1_TLV;
+  mu0_TLV.SetPxPyPzE(m_l0->px, m_l0->py, m_l0->pz, m_l0->E);
+  mu1_TLV.SetPxPyPzE(m_l1->px, m_l1->py, m_l1->pz, m_l1->E);
+  calc_MM_variables(mu0_TLV, mu1_TLV, met_TLV, m_jets_skimmed, m_lepts_skimmed);
+  if(m_eventParameters->mllZcandidate_mu > MZ+20. || m_eventParameters->mllZcandidate_mu < MZ-20){
+    cutnumber_MM = 24.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+    //===============================================================================================================================		  
+    if(m_jets_skimmed.size() ==1){
+      cutnumber_MM = 25.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+      
+      if(mu0_TLV.Pt()>=20. && mu1_TLV.Pt()>=20. && ((mu0_TLV.Pt()>mu1_TLV.Pt() && mu0_TLV.Pt() >= 30.) || (mu0_TLV.Pt()<mu1_TLV.Pt() && mu1_TLV.Pt() >= 30.))){
+	cutnumber_MM = 26.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+	cutnumber_MM = 27.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight); //ZVeto
+	if(DeltaEtall_MM < 1.5){
+	  cutnumber_MM = 28.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
 	    
-		if(HT_MM > 200.){
-		  cutnumber_MM = 31.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-    
-		  
+	  if(mTmax_MM > 100.){
+	    cutnumber_MM = 29.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+	    if(Mlj_MM < 90.){
+	      cutnumber_MM = 30.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+	  
+	      if(HT_MM > 200.){
+		cutnumber_MM = 31.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+  
+		
+	      }
+	    }
+	  }
+	}
+    }
+  }//end ==1 jets
+  //===============================================================================================================================		  
+  if(m_jets_skimmed.size() >=2 && m_jets_skimmed.size() <=3){
+    if(m_eventParameters->eventNumber == 451609){
+      cout << "event 451609 " << 
+      " mll = " << (mu0_TLV + mu1_TLV).M() << 
+      " m_l0->q= " << m_l0->q << 
+      " mu0_TLV.Pt()= " << mu0_TLV.Pt() << 
+      " mu0_TLV.Eta()= " << mu0_TLV.Eta() <<
+      " mu0_TLV.Phi()= " << mu0_TLV.Phi() << 
+      
+      " m_l1->q= " << m_l1->q << 
+      " mu1_TLV.Pt()= " << mu1_TLV.Pt() << 
+      " mu1_TLV.Eta()= " << mu1_TLV.Eta() <<
+      " mu1_TLV.Phi()= " << mu1_TLV.Phi() << endl;
+    }
+      
+    cutnumber_MM = 34.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+    if(mu0_TLV.Pt()>=30. && mu1_TLV.Pt()>=30. && ((mu0_TLV.Pt()>mu1_TLV.Pt() && mu0_TLV.Pt() >= 30.) || (mu0_TLV.Pt()<mu1_TLV.Pt() && mu1_TLV.Pt() >= 30.))){
+      cutnumber_MM = 35.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+      
+      cutnumber_MM = 36.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight); //ZVeto
+      if(DeltaEtall_MM<1.5){
+	cutnumber_MM = 37.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+	cutnumber_MM = 38.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+	
+	if(Mljj_MM < 120.){
+	  cutnumber_MM = 39.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
+	  if(HT_MM >= 220.){
+	    cutnumber_MM = 40.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);	
+	  }
+	}
+      }
+    }
+  }//end >=2 jets  
+  //===============================================================================================================================		  
+  }
+  
+  // check 3rd lepton veto significance:
+  
+    //===============================================================================================================================		  
+    if(m_jets_skimmed.size() ==1){
+      
+      if(mu0_TLV.Pt()>=20. && mu1_TLV.Pt()>=20. && ((mu0_TLV.Pt()>mu1_TLV.Pt() && mu0_TLV.Pt() >= 30.) || (mu0_TLV.Pt()<mu1_TLV.Pt() && mu1_TLV.Pt() >= 30.))){
+	if(DeltaEtall_MM < 1.5){	    
+	  if(mTmax_MM > 100.){
+	    if(Mlj_MM < 90.){	  
+	      if(HT_MM > 200.){ 
+		cutnumber_MM = 50.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);	
+		if(m_eventParameters->mllZcandidate_mu > MZ+ZMassWindow_check || m_eventParameters->mllZcandidate_mu < MZ-ZMassWindow_check){
+		  cutnumber_MM = 51.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);	
 		}
 	      }
 	    }
 	  }
-      }
-    }//end ==1 jets
-    //===============================================================================================================================		  
-    if(m_jets_skimmed.size() >=2 && m_jets_skimmed.size() <=3){
-      cutnumber_MM = 34.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-      if(mu0_TLV.Pt()>=30. && mu1_TLV.Pt()>=30. && ((mu0_TLV.Pt()>mu1_TLV.Pt() && mu0_TLV.Pt() >= 30.) || (mu0_TLV.Pt()<mu1_TLV.Pt() && mu1_TLV.Pt() >= 30.))){
-	cutnumber_MM = 35.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-	
-	cutnumber_MM = 36.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight); //ZVeto
-	if(DeltaEtall_MM<1.5){
-	  cutnumber_MM = 37.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-	  cutnumber_MM = 38.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-	  
-	  if(Mljj_MM < 120.){
-	    cutnumber_MM = 39.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);
-	    if(HT_MM >= 220.){
-	      cutnumber_MM = 40.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);	
-	    }
+	}
+    }
+  }//end ==1 jets
+  //===============================================================================================================================		  
+  if(m_jets_skimmed.size() >=2 && m_jets_skimmed.size() <=3){
+    if(mu0_TLV.Pt()>=30. && mu1_TLV.Pt()>=30. && ((mu0_TLV.Pt()>mu1_TLV.Pt() && mu0_TLV.Pt() >= 30.) || (mu0_TLV.Pt()<mu1_TLV.Pt() && mu1_TLV.Pt() >= 30.))){
+      if(DeltaEtall_MM<1.5){	
+	if(Mljj_MM < 120.){
+	  if(HT_MM >= 220.){
+	    cutnumber_MM = 60.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);	
+	    if(m_eventParameters->mllZcandidate_mu > MZ+ZMassWindow_check || m_eventParameters->mllZcandidate_mu < MZ-ZMassWindow_check){
+	      cutnumber_MM = 61.;  fillHistos_1j_MM(cutnumber_MM, m_eventParameters->weight);	
+	    }	    
 	  }
 	}
       }
-    }//end >=2 jets  
     }
-//   }
+  }//end >=2 jets  
+  //===============================================================================================================================	  
+  
+  
 }
 
 //===========================================================================================
@@ -336,7 +415,45 @@ if((m_l0->isEl && m_l1->isMu) || (m_l0->isMu && m_l1->isEl)){
 	}
       }
     }//end >=2 jets
+    //------------------------------------------------------------------------------------
   }
+  //check 3rd lepton veto significance:
+  
+    //------------------------------------------------------------------------------------
+    if(m_jets_skimmed.size() ==1){
+      if(el_SS_TLV.Pt()>=30. && mu_TLV.Pt()>=30. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){	
+	if(DeltaEtall_EM < 1.5){				
+	  if(mTmax_EM > 110){
+	    if(Mlj_EM < 90.){
+	      if(HT_EM > 200.){
+		cutnumber_EM = 50.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		if((m_eventParameters->mllZcandidate_mu > MZ+ZMassWindow_check || m_eventParameters->mllZcandidate_mu < MZ-ZMassWindow_check) && (m_eventParameters->mllZcandidate_el > MZ+ZMassWindow_check || m_eventParameters->mllZcandidate_el < MZ-ZMassWindow_check)){
+		  cutnumber_EM = 51.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		}
+	      }				 
+	    }
+	  }
+	}
+      }
+    }//end ==1jet
+  //------------------------------------------------------------------------------------
+    if(m_jets_skimmed.size() >=2 && m_jets_skimmed.size() <=3){
+      if(el_SS_TLV.Pt()>=30. && mu_TLV.Pt()>=30. && ((el_SS_TLV.Pt()>mu_TLV.Pt() && el_SS_TLV.Pt() >= 30.) || (el_SS_TLV.Pt()<mu_TLV.Pt() && mu_TLV.Pt() >= 30.))){
+	if(DeltaEtall_EM < 1.5){	  
+	  if(mTmax_EM >= 110.){
+	    if(Mljj_EM < 120.){
+	      if(HT_EM > 200.){	
+		cutnumber_EM = 60.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		if((m_eventParameters->mllZcandidate_mu > MZ+ZMassWindow_check || m_eventParameters->mllZcandidate_mu < MZ-ZMassWindow_check) && (m_eventParameters->mllZcandidate_el > MZ+ZMassWindow_check || m_eventParameters->mllZcandidate_el < MZ-ZMassWindow_check)){
+		  cutnumber_EM = 61.; fillHistos_1j_EM(cutnumber_EM, m_eventParameters->weight);
+		}		
+	      }
+	    }
+	  }
+	}
+      }
+    }//end >=2 jets
+    
 }
       
 //===========================================================================================
@@ -501,44 +618,44 @@ void SusySel::SlaveTerminate()
   cout << "sample_identifier= " << sample_identifier << endl;
   TString outputfile;
   
-  if(sample_identifier == 126893)  outputfile = "output_126893_SusySel_try.root"; //cutflow  
-  if(sample_identifier == 30000)  outputfile = "output_fake_SusySel_try.root"; //fake  
-  if(sample_identifier == 169471)  outputfile = "output_WW_SusySel_try.root"; //WW
-  if(sample_identifier == 126988)  outputfile = "output_WWPlusJets_SusySel_try.root";//WWPlusJets
-  if(sample_identifier == 157814)  outputfile = "output_WZ_SusySel_try.root"; //WZ    
-  if(sample_identifier == 116600)  outputfile = "output_ZZ_SusySel_try.root"; //ZZ
-  if(sample_identifier == 108346)  outputfile = "output_ttbar_SusySel_try.root"; //ttbar    
-  if(sample_identifier == 110805)  outputfile = "output_ZPlusJets_SusySel_try.root"; //ZPlusJets    
-  if(sample_identifier == 160155)  outputfile = "output_Higgs_SusySel_try.root"; //Higgs
+  if(sample_identifier == 126893)  outputfile = "output_126893_SusySel_05_05_2014.root"; //cutflow  
+  if(sample_identifier == 30000)  outputfile = "output_fake_SusySel_05_05_2014.root"; //fake  
+  if(sample_identifier == 169471)  outputfile = "output_WW_SusySel_05_05_2014.root"; //WW
+  if(sample_identifier == 126988)  outputfile = "output_WWPlusJets_SusySel_05_05_2014.root";//WWPlusJets
+  if(sample_identifier == 157814)  outputfile = "output_WZ_SusySel_05_05_2014.root"; //WZ    
+  if(sample_identifier == 116600)  outputfile = "output_ZZ_SusySel_05_05_2014.root"; //ZZ
+  if(sample_identifier == 108346)  outputfile = "output_ttbar_SusySel_05_05_2014.root"; //ttbar    
+  if(sample_identifier == 110805)  outputfile = "output_ZPlusJets_SusySel_05_05_2014.root"; //ZPlusJets    
+  if(sample_identifier == 160155)  outputfile = "output_Higgs_SusySel_05_05_2014.root"; //Higgs
 
-  if(sample_identifier == 177501)  outputfile = "output_WH_177501_SusySel_try.root";  
-  if(sample_identifier == 177502)  outputfile = "output_WH_177502_SusySel_try.root";  
-  if(sample_identifier == 177503)  outputfile = "output_WH_177503_SusySel_try.root";  
-  if(sample_identifier == 177504)  outputfile = "output_WH_177504_SusySel_try.root";  
-  if(sample_identifier == 177505)  outputfile = "output_WH_177505_SusySel_try.root";  
-  if(sample_identifier == 177506)  outputfile = "output_WH_177506_SusySel_try.root";  
-  if(sample_identifier == 177507)  outputfile = "output_WH_177507_SusySel_try.root";  
-  if(sample_identifier == 177508)  outputfile = "output_WH_177508_SusySel_try.root";  
-  if(sample_identifier == 177509)  outputfile = "output_WH_177509_SusySel_try.root";  
-  if(sample_identifier == 177510)  outputfile = "output_WH_177510_SusySel_try.root";  
-  if(sample_identifier == 177511)  outputfile = "output_WH_177511_SusySel_try.root";  
-  if(sample_identifier == 177512)  outputfile = "output_WH_177512_SusySel_try.root";  
-  if(sample_identifier == 177513)  outputfile = "output_WH_177513_SusySel_try.root";  
-  if(sample_identifier == 177514)  outputfile = "output_WH_177514_SusySel_try.root";  
-  if(sample_identifier == 177515)  outputfile = "output_WH_177515_SusySel_try.root";  
-  if(sample_identifier == 177516)  outputfile = "output_WH_177516_SusySel_try.root";  //!40014
-  if(sample_identifier == 177517)  outputfile = "output_WH_177517_SusySel_try.root";  
-  if(sample_identifier == 177518)  outputfile = "output_WH_177518_SusySel_try.root";  //!20002
-  if(sample_identifier == 177519)  outputfile = "output_WH_177519_SusySel_try.root";  
-  if(sample_identifier == 177520)  outputfile = "output_WH_177520_SusySel_try.root";  
-  if(sample_identifier == 177521)  outputfile = "output_WH_177521_SusySel_try.root";  //!45004
-  if(sample_identifier == 177522)  outputfile = "output_WH_177522_SusySel_try.root";  
-  if(sample_identifier == 177523)  outputfile = "output_WH_177523_SusySel_try.root";  
-  if(sample_identifier == 177524)  outputfile = "output_WH_177524_SusySel_try.root";  
-  if(sample_identifier == 177525)  outputfile = "output_WH_177525_SusySel_try.root";  
-  if(sample_identifier == 177526)  outputfile = "output_WH_177526_SusySel_try.root";  
-  if(sample_identifier == 177527)  outputfile = "output_WH_177527_SusySel_try.root";
-//   outputfile = "output_ZplusJets_2_try.root";  
+  if(sample_identifier == 177501)  outputfile = "output_WH_177501_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177502)  outputfile = "output_WH_177502_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177503)  outputfile = "output_WH_177503_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177504)  outputfile = "output_WH_177504_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177505)  outputfile = "output_WH_177505_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177506)  outputfile = "output_WH_177506_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177507)  outputfile = "output_WH_177507_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177508)  outputfile = "output_WH_177508_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177509)  outputfile = "output_WH_177509_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177510)  outputfile = "output_WH_177510_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177511)  outputfile = "output_WH_177511_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177512)  outputfile = "output_WH_177512_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177513)  outputfile = "output_WH_177513_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177514)  outputfile = "output_WH_177514_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177515)  outputfile = "output_WH_177515_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177516)  outputfile = "output_WH_177516_SusySel_05_05_2014.root";  //!40014
+  if(sample_identifier == 177517)  outputfile = "output_WH_177517_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177518)  outputfile = "output_WH_177518_SusySel_05_05_2014.root";  //!20002
+  if(sample_identifier == 177519)  outputfile = "output_WH_177519_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177520)  outputfile = "output_WH_177520_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177521)  outputfile = "output_WH_177521_SusySel_05_05_2014.root";  //!45004
+  if(sample_identifier == 177522)  outputfile = "output_WH_177522_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177523)  outputfile = "output_WH_177523_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177524)  outputfile = "output_WH_177524_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177525)  outputfile = "output_WH_177525_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177526)  outputfile = "output_WH_177526_SusySel_05_05_2014.root";  
+  if(sample_identifier == 177527)  outputfile = "output_WH_177527_SusySel_05_05_2014.root";
+//   outputfile = "output_Egamma_A.root";  
 
   
   
